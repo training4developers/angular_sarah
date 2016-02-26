@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Welcome to Angular.js!</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
+	</head>
+
+	<body>
+		<div ng-app="MyApp">
+			<div ng-controller="MyCtrl">
+
+				<ul>
+					<li ng-repeat="color in colors">{{color}}</li>
+				</ul>
+
+				<div ng-repeat="color in colors">{{color}}</div>
+
+			</div>
+		</div>
+
+		<script>
+
+			angular.module("MyApp", [])
+				.controller("MyCtrl", function($scope) {
+
+					$scope.colors = ["red","blue","green","yellow"];
+
+				});
+
+		</script>
+
+	</body>
+
+</html>
