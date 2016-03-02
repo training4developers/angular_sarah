@@ -9,9 +9,47 @@
 
 	<body>
 		<div ng-app="MyApp">
+			Occupation Filter: <input ng-model="occupationFilter" />
 			<div ng-controller="MyCtrl">
-				{{message}}<br>
-				<input ng-model="message">
+				<table>
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Name</th>
+							<th>Political Party</th>
+							<th>Occupation</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="candidate in candidates | filter:{ 'occupation': occupationFilter } | orderBy:'politicalParty':true">
+							<td>{{$index + 1}}</td>
+							<td>{{candidate.name}}</td>
+							<td>{{candidate.politicalParty}}</td>
+							<td>{{candidate.occupation}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<form>
+
+					<div>
+						<label>
+							Name: <input ng-model="candidate.name">
+						</label>
+					</div>
+					<div>
+						<label>
+							Political Party: <input ng-model="candidate.politicalParty">
+						</label>
+					</div>
+					<div>
+						<label>
+							Occupation: <input ng-model="candidate.occupation">
+						</label>
+					</div>
+
+					<button type="button" ng-click="addCandidate()">Add Candidate</button>
+
+				</form>
 			</div>
 		</div>
 
@@ -19,18 +57,19 @@
 
 			angular.module("MyApp", [])
 				.controller("MyCtrl", function($scope) {
-					$scope.message = "Hi!";
 
-					$scope.$watch(function() {
+					$scope.candidates = [
+						{ name: "Donald Trump", politicalParty: "Republican", occupation: "Business Owner" },
+						{ name: "Hillary Clinton", politicalParty: "Democrat", occupation: "World Tour" },
+						{ name: "John Kasich", politicalParty: "Republican", occupation: "Ohio Governor" },
+						{ name: "Ted Cruz", politicalParty: "Republican", occupation: "Senator" },
+						{ name: "Bernie Sanders", politicalParty: "Democrat", occupation: "Senator" }
+					];
 
-						console.log("digest loop executed");
-
-						// var count = 1000000000;
-						// while(count--) {
-						//
-						// }
-
-					});
+					$scope.addCandidate = function() {
+						$scope.candidates.push($scope.candidate);
+						$scope.candidate = {};
+					};
 
 				});
 
